@@ -1,0 +1,90 @@
+{
+  "compilerOptions": {
+    // ===== 基础配置 =====
+
+    // 编译目标语法版本，ESNext 表示输出最新的 ECMAScript 语法
+    "target": "ESNext",
+
+    // 生成的模块格式，preserve 表示保持 ES Module，不做转换（交给 Vite/Webpack）
+    "module": "preserve",
+
+    // 模块解析方式：使用 bundler 模式，模拟 Vite/Webpack/esbuild 的解析规则
+    "moduleResolution": "bundler",
+
+    // 编译时可用的库，包含 DOM API 和最新 ECMAScript 特性
+    "lib": ["DOM", "ESNext"],
+
+    // 是否允许编译 JS 文件（前端纯 TS 项目禁用）
+    "allowJs": false,
+
+    // JSX 代码的处理方式，react-jsx 表示使用 React 17+ 的新 JSX 转换
+    // 不需要再手动写 jsxFactory / jsxFragmentFactory
+    "jsx": "preserve",
+    "jsxImportSource": "vue",
+
+    // 自动加载的类型声明文件
+    "types": ["vite", "@types/node"],
+
+    // 路径基础目录，结合 paths 使用
+    "baseUrl": ".",
+
+    // 路径别名，@/ 代表 src 目录，需要和 Vite alias 配置保持一致
+    "paths": {
+      "@/*": ["src/*"]
+    },
+
+    // 允许导入 JSON 文件
+    "resolveJsonModule": true,
+
+    // 允许将 CommonJS 模块用 import 引入（比如 import fs from "fs"）
+    "esModuleInterop": true,
+
+    // ===== 严格模式 =====
+
+    // 开启严格模式（相当于同时开启以下所有严格检查）
+    "strict": true,
+
+    // 是否强制检查 null/undefined
+    "strictNullChecks": true,
+    // 是否强制类的属性必须在构造函数初始化
+    "strictPropertyInitialization": true,
+
+    // 是否禁止隐式 any
+    "noImplicitAny": true,
+
+    // 检查未使用的局部变量
+    "noUnusedLocals": true,
+
+    // 检查函数未使用的参数
+    "noUnusedParameters": true,
+
+    // 禁止 switch case 穿透
+    "noFallthroughCasesInSwitch": true,
+
+    // ===== 其他编译相关 =====
+
+    // 跳过 node_modules 里的类型检查，加快编译速度
+    "skipLibCheck": true,
+
+    // 强制文件名大小写一致，避免跨平台问题
+    "forceConsistentCasingInFileNames": true,
+
+    // 生成 source map 文件，方便调试
+    "sourceMap": true,
+
+    // 每个文件作为独立模块处理（Vite 等工具要求）
+    "isolatedModules": true,
+
+    // 编译输出目录
+    "outDir": "dist",
+
+    // 项目根目录
+    "rootDir": "."
+  },
+
+  // 需要编译的文件范围
+  "include": ["src/**/*", "vite.config.ts"],
+
+  // 排除不参与编译的文件/目录
+  "exclude": ["node_modules", "dist", "**/*.test.ts"]
+}
