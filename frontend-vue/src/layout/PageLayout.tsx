@@ -8,10 +8,10 @@ const PageLayout = defineComponent({
   name: 'PageLayout',
   setup() {
     return () => (
-      <div class="flex flex-col h-screen w-full overflow-hidden">
-        <Header />
+      <div class="flex h-screen w-full overflow-hidden">
+        <Aside routes={adminRoutes} />
         <div class="flex flex-1 overflow-hidden">
-          <Aside routes={adminRoutes} />
+          <Header />
           <section class="flex-1 overflow-hidden h-full">
             {/* 这里才会显示子路由组件 */}
             <RouterView></RouterView>
