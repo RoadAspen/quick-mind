@@ -1,7 +1,6 @@
 /** 全部路由 */
+import PageLayout from '@/layout/PageLayout';
 import type { RouteRecordRaw } from 'vue-router';
-
-export const whiteList = ['/register', '/about'];
 
 export const whiteRoutes: RouteRecordRaw[] = [
   {
@@ -15,6 +14,8 @@ export const whiteRoutes: RouteRecordRaw[] = [
     component: () => import('@/views/login/Registry')
   }
 ];
+/** 白名单 */
+export const whiteList = whiteRoutes.map((route) => route.path);
 
 export const adminRoutes: Array<RouteRecordRaw & { meta: { title: string } }> =
   [
@@ -189,13 +190,13 @@ export const adminRoutes: Array<RouteRecordRaw & { meta: { title: string } }> =
     }
   ];
 
-const routes = [
+const routes: Array<RouteRecordRaw & { meta?: { title?: string } }> = [
   ...whiteRoutes,
   ...[
     {
-      path: '/',
-      redirect: 'home',
-      component: () => import('@/layout/PageLayout'),
+      path: '/', // 根路径
+      redirect: '/home', // 默认打开 /home
+      component: PageLayout, // 统一布局
       children: adminRoutes
     }
   ]

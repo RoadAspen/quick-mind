@@ -29,7 +29,11 @@ export default defineComponent({
       // console.log(routes);
 
       return routes.map((route) => {
-        const fullPath = `${prevPath}/${route.path}`.replace('//', '/'); // 避免重复斜杠
+        const fullPath =
+          `${prevPath !== '/' ? prevPath : ''}/${route.path}`.replace(
+            '//',
+            '/'
+          ); // 避免重复斜杠
         if (route.children && route.children.length > 0) {
           // 渲染有子菜单的菜单项
           return (
@@ -62,16 +66,15 @@ export default defineComponent({
     );
     return () => (
       <aside
-        class={classNames(
-          'slider-container w-40 flex-shrink-0 transition-width duration-300',
-          {
-            'w-[200px]': !themeStore.isCollapse,
-            'w-[54px]': themeStore.isCollapse
-          }
-        )}
-        // style={{ backgroundColor: 'rgb(48, 65, 86)' }}
+        class={classNames('slider-container w-40 flex-shrink-0', {
+          'w-[200px]': !themeStore.isCollapse,
+          'w-[80px]': themeStore.isCollapse
+        })}
       >
-        <div class="relative w-full h-[50px] bg-[#001529] text-center overflow-hidden">
+        <div
+          class="relative w-full h-[50px] bg-[#001529] text-center overflow-hidden"
+          style={{ transition: 'width 3s cubic-bezier(0.2, 0, 0, 1) 0s' }}
+        >
           <a
             href="/"
             class="flex w-full h-full overflow-hidden cursor-pointer justify-center items-center"
@@ -103,6 +106,7 @@ export default defineComponent({
           openKeys={openKeys.value}
           mode="inline"
           theme={themeStore.theme}
+          inline-collapsed={themeStore.isCollapse}
         >
           {renderMenuItems(props.routes, '/')}
         </Menu>

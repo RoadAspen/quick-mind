@@ -8,16 +8,19 @@ const PageLayout = defineComponent({
   name: 'PageLayout',
   setup() {
     return () => (
-      <div class="flex h-screen w-full overflow-hidden">
+      <section class="flex h-screen w-full overflow-hidden">
         <Aside routes={adminRoutes} />
-        <div class="flex flex-1 overflow-hidden">
+        <section class="flex-1">
           <Header />
-          <section class="flex-1 overflow-hidden h-full">
+          <section
+            class="overflow-hidden"
+            style={{ height: 'clac(100% - 50px)' }}
+          >
             {/* 这里才会显示子路由组件 */}
             <RouterView></RouterView>
           </section>
-        </div>
-      </div>
+        </section>
+      </section>
     );
   }
 });

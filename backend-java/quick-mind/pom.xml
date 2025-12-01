@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <!-- 公司名称,组织或团体 的id -->
+    <groupId>com.quickmind</groupId> <!-- 包名前缀（公司/个人域名倒写） -->
+    <!-- 项目名称, 在指定groupId下的唯一标识符 -->
+    <artifactId>quickmind</artifactId>  <!-- 项目名称 -->
+    <!-- 项目的当前版本 -->
+    <version>0.0.1-SNAPSHOT</version> <!-- 版本号（SNAPSHOT 表示开发版） -->
+    <!-- 项目默认的打包方式,不写为jar -->
+    <packaging>jar</packaging>
+    <!-- 该项目的显示名称 ,具有可读性-->
+    <name>quickmind</name>
+    <!-- 项目的简要描述 -->
+    <description>捷智管理系统</description>
+
+    <!-- Spring Boot 版本 2.7.18, java 1.8 支持的最终稳定版本（默认版本，稳定无坑） -->
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.7.18</version>
+         <!-- 确保Maven知道父pom的位置，一般不需要改动 -->
+        <relativePath/>
+    </parent>
+
+
+
+    <!-- 此部分允许定义可重用的变量，以提高 pom.xml 的可维护性，例如统一管理依赖版本号。 -->
+    <properties>
+        <!-- java版本 -->
+        <java.version>1.8</java.version>
+        <!-- mybatis-plus版本, 支持 spring boot 2.x版本 -->
+        <mybatis-plus.version>3.5.15</mybatis-plus.version>
+        <!-- jwt版本 -->
+        <jwt.version>0.9.1</jwt.version>
+    </properties>
+
+    <!-- 核心依赖 -->
+    <dependencies>
+        <!-- Spring Web 核心依赖：让项目成为 Web 项目，能接收 HTTP 请求（写接口必备） -->
+        <!-- 包含：Tomcat 服务器（不用手动装）、Spring MVC（处理接口请求） -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+
+        <!-- Spring Security 权限控制 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+
+        <!-- MyBatis-Plus 简化数据库操作 -->
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-boot-starter</artifactId>
+            <version>${mybatis-plus.version}</version>
+        </dependency>
+
+        <!-- MySQL 驱动依赖：让项目能连接本地 MySQL 数据库 -->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <!-- 运行时才生效，编译时不用 -->
+            <scope>runtime</scope>
+        </dependency>
+
+        <!-- Lombok 依赖：简化实体类代码（不用写 getter/setter/toString） -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <!-- 可选，但新手强烈推荐 -->
+            <optional>true</optional> 
+        </dependency>
+
+        <!-- JWT 生成 Token（若依权限核心） -->
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt</artifactId>
+            <version>${jwt.version}</version>
+        </dependency>
+
+        <!-- Spring Boot 测试依赖：后续写单元测试用（暂时不用管，先加上） -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <!-- 打包插件：让项目能打包成 Jar 包（部署时用，本地运行可忽略） -->
+    <build>
+        <finalName>quick-mind</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <excludes>
+                        <exclude>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                        </exclude>
+                    </excludes>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+    <!-- 定义Maven从何处下载依赖（默认是Maven中央仓库）,国内镜像（解决依赖下载超时，新手必加） -->
+    <repositories>
+        <repository>
+            <id>aliyunmaven</id>
+            <name>阿里云中央仓库</name>
+            <url>https://maven.aliyun.com/repository/public</url>
+        </repository>
+    </repositories>
+</project>

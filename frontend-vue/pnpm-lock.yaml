@@ -35,6 +35,9 @@ importers:
       pinia:
         specifier: ^2.3.0
         version: 2.3.1(typescript@5.6.3)(vue@3.5.25(typescript@5.6.3))
+      screenfull:
+        specifier: ^6.0.2
+        version: 6.0.2
       vue:
         specifier: ^3.5.13
         version: 3.5.25(typescript@5.6.3)
@@ -57,6 +60,9 @@ importers:
       '@types/nprogress':
         specifier: ^0.2.3
         version: 0.2.3
+      '@types/screenfull':
+        specifier: ^4.1.0
+        version: 4.1.0
       '@typescript-eslint/eslint-plugin':
         specifier: ^8.19.1
         version: 8.44.1(@typescript-eslint/parser@8.44.1(eslint@9.36.0(jiti@1.21.7))(typescript@5.6.3))(eslint@9.36.0(jiti@1.21.7))(typescript@5.6.3)
@@ -754,6 +760,10 @@ packages:
 
   '@types/nprogress@0.2.3':
     resolution: {integrity: sha512-k7kRA033QNtC+gLc4VPlfnue58CM1iQLgn1IMAU8VPHGOj7oIHPp9UlhedEnD/Gl8evoCjwkZjlBORtZ3JByUA==, tarball: https://registry.npmjs.org/@types/nprogress/-/nprogress-0.2.3.tgz}
+
+  '@types/screenfull@4.1.0':
+    resolution: {integrity: sha512-TuFSOzuzGFVCdQmwp+a0/Qim+nJhclaWha18yK/xmjrwdPI7qrfeyoSyPx8MoJP8X5d2MwB4a6d2sZhUjJwz9A==, tarball: https://registry.npmjs.org/@types/screenfull/-/screenfull-4.1.0.tgz}
+    deprecated: This is a stub types definition. screenfull provides its own type definitions, so you do not need this installed.
 
   '@types/web-bluetooth@0.0.21':
     resolution: {integrity: sha512-oIQLCGWtcFZy2JW77j9k8nHzAOpqMHLQejDA48XXMWH6tjCQHz5RCFz1bzsmROyL6PUm+LLnUiI4BCn221inxA==, tarball: https://registry.npmjs.org/@types/web-bluetooth/-/web-bluetooth-0.0.21.tgz}
@@ -2449,6 +2459,10 @@ packages:
   sax@1.4.3:
     resolution: {integrity: sha512-yqYn1JhPczigF94DMS+shiDMjDowYO6y9+wB/4WgO0Y19jWYk0lQ4tuG5KI7kj4FTp1wxPj5IFfcrz/s1c3jjQ==, tarball: https://registry.npmjs.org/sax/-/sax-1.4.3.tgz}
 
+  screenfull@6.0.2:
+    resolution: {integrity: sha512-AQdy8s4WhNvUZ6P8F6PB21tSPIYKniic+Ogx0AacBMjKP1GUHN2E9URxQHtCusiwxudnCKkdy4GrHXPPJSkCCw==, tarball: https://registry.npmjs.org/screenfull/-/screenfull-6.0.2.tgz}
+    engines: {node: ^14.13.1 || >=16.0.0}
+
   scroll-into-view-if-needed@2.2.31:
     resolution: {integrity: sha512-dGCXy99wZQivjmjIqihaBQNjryrz5rueJY7eHfTdyWEiR4ttYpsajb14rn9s5d4DY4EcY6+4+U/maARBXJedkA==, tarball: https://registry.npmjs.org/scroll-into-view-if-needed/-/scroll-into-view-if-needed-2.2.31.tgz}
 
@@ -3426,6 +3440,10 @@ snapshots:
       undici-types: 6.21.0
 
   '@types/nprogress@0.2.3': {}
+
+  '@types/screenfull@4.1.0':
+    dependencies:
+      screenfull: 6.0.2
 
   '@types/web-bluetooth@0.0.21': {}
 
@@ -5299,6 +5317,8 @@ snapshots:
 
   sax@1.4.3:
     optional: true
+
+  screenfull@6.0.2: {}
 
   scroll-into-view-if-needed@2.2.31:
     dependencies:

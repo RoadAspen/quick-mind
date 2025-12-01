@@ -1,13 +1,12 @@
+import AvatorImg from '@/assets/avator.png';
+import IconExpand from '@/assets/header/icon-expand.svg';
+import Screenfull from '@/components/Screenfull';
 import { useThemeStore } from '@/store/theme';
-import {
-  LogoutOutlined,
-  MenuFoldOutlined,
-  MenuUnfoldOutlined,
-  UserOutlined
-} from '@ant-design/icons-vue';
-import { Dropdown, Menu } from 'ant-design-vue';
+import { LogoutOutlined } from '@ant-design/icons-vue';
+import { Avatar, Dropdown, Menu } from 'ant-design-vue';
+import classNames from 'classnames';
 import { defineComponent } from 'vue';
-
+import BreadCrumb from './BreadCrumb';
 export default defineComponent({
   name: 'Header',
   setup() {
@@ -16,8 +15,7 @@ export default defineComponent({
       console.log('退出登录');
       // 这里可以添加退出登录逻辑，如清除 token，跳转到登录页
     };
-
-    const menu = (
+    const userMenu = (
       <Menu>
         <Menu.Item key="profile">
           <a href="/profile">个人中心</a>
@@ -28,25 +26,48 @@ export default defineComponent({
         </Menu.Item>
       </Menu>
     );
+    const themeMenu = (
+      <Menu>
+        <Menu.Item key="profile">
+          <a href="/profile">个人中心</a>
+        </Menu.Item>
+        <Menu.Item key="logout" onClick={handleLogout}>
+          <a href="/profile">退出登录</a>
+        </Menu.Item>
+      </Menu>
+    );
 
     return () => (
-      <header class="flex justify-between items-center h-14 flex-shrink-0 px-6 bg-gray-800 text-white shadow-md">
-        <div>
-          <div onClick={themeStore.switchCollapse}>
-            {themeStore.isCollapse ? (
-              <MenuUnfoldOutlined />
-            ) : (
-              <MenuFoldOutlined />
-            )}
+      <header class="flex justify-between items-center h-[50px] flex-shrink-0  shadow-md">
+        <div class="flex h-full items-center">
+          <div
+            class="cursor-pointer h-full  px-4 flex items-center justify-center mr-2"
+            onClick={themeStore.switchCollapse}
+          >
+            <img
+              src={IconExpand}
+              class={classNames('transition-transform duration-500', {
+                '[transform:rotateY(180deg)]': themeStore.isCollapse
+              })}
+            />
           </div>
+          <BreadCrumb />
         </div>
-        <div class="flex items-center space-x-4">
-          <Dropdown overlay={menu}>
-            <div class="flex items-center cursor-pointer">
-              <UserOutlined class="mr-2" />
-              <span>管理员</span>
+        <div class="flex items-center h-full  space-x-4 pr-2">
+          <Screenfull
+            style={{
+              'display': 'flex',
+              'justify-content': 'center',
+              'align-items': 'center'
+            }}
+          />
+          <Dropdown overlay={userMenu}>
+            <div class="flex items-center justify-center cursor-pointer mr-4">
+              <Avatar src={AvatorImg} class="mr-1" />
+              <span class="text-[14px] font-bold text-[#5a5e66]">捷智</span>
             </div>
           </Dropdown>
+          <Dropdown overlay={themeMenu}>...</Dropdown>
         </div>
       </header>
     );
