@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 命名空间：必须和 Mapper 接口的全类名一致 -->
+<mapper namespace="com.quickmind.mapper.SysUserMapper">
+    <!-- 自定义 SQL 查询：根据用户名查询用户信息 -->
+    <select id="selectByUserName" parameterType="String" resultType="com.quickmind.entity.SysUser">
+        <!-- SQL语句：根据用户名查询用户信息, #{userName} 是参数占位符,表示传入的用户名,和mapper中的方法参数对应  -->
+        SELECT * FROM sys_user WHERE user_name = #{userName}
+    </select>
+</mapper>

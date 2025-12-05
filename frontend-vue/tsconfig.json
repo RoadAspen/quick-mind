@@ -17,7 +17,6 @@
     // 是否允许编译 JS 文件（前端纯 TS 项目禁用）
     "allowJs": false,
 
-    // JSX 代码的处理方式，react-jsx 表示使用 React 17+ 的新 JSX 转换
     // 不需要再手动写 jsxFactory / jsxFragmentFactory
     "jsx": "preserve",
     "jsxImportSource": "vue",
