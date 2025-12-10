@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <!-- 公司名称,组织或团体 的id -->
@@ -21,10 +21,9 @@
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>2.7.18</version>
-         <!-- 确保Maven知道父pom的位置，一般不需要改动 -->
+        <!-- 确保Maven知道父pom的位置，一般不需要改动 -->
         <relativePath/>
     </parent>
-
 
 
     <!-- 此部分允许定义可重用的变量，以提高 pom.xml 的可维护性，例如统一管理依赖版本号。 -->
@@ -34,7 +33,7 @@
         <!-- mybatis-plus版本, 支持 spring boot 2.x版本 -->
         <mybatis-plus.version>3.4.2</mybatis-plus.version>
         <!-- jwt版本 -->
-        <jwt.version>0.9.1</jwt.version>
+        <jwt.version>0.11.5</jwt.version>
     </properties>
 
     <!-- 核心依赖 -->
@@ -73,14 +72,34 @@
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <!-- 可选，但新手强烈推荐 -->
-            <optional>true</optional> 
+            <optional>true</optional>
         </dependency>
 
-        <!-- JWT 生成 Token（若依权限核心） -->
+        <!-- JWT 生成 Token 核心API（包含 security 包）, 权限核心 -->
         <dependency>
             <groupId>io.jsonwebtoken</groupId>
-            <artifactId>jjwt</artifactId>
+            <artifactId>jjwt-api</artifactId>
+            <version>${jwt.version}</version> <!-- 最新稳定版 -->
+        </dependency>
+        <!-- 实现类（运行时必须） -->
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt-impl</artifactId>
             <version>${jwt.version}</version>
+            <scope>runtime</scope>
+        </dependency>
+        <!-- JSON序列化（解析JWT的Claims需要） -->
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt-jackson</artifactId>
+            <version>${jwt.version}</version>
+            <scope>runtime</scope>
+        </dependency>
+        <!-- Apache Commons Lang 工具类库（简化代码编写） -->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.14.0</version> <!-- 可选最新版本 -->
         </dependency>
 
         <!-- Spring Boot 测试依赖：后续写单元测试用（暂时不用管，先加上） -->

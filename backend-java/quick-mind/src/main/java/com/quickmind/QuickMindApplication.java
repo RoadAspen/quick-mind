@@ -4,7 +4,11 @@ package com.quickmind;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-// 注解：标识这是 Spring Boot 启动类（固定写法）
+/**
+ * 注解：标识这是 Spring Boot 启动类（固定写法）
+ * @author roadaspen
+ * @since 2025/12/10 16:30
+  */
 @SpringBootApplication
 public class QuickMindApplication {
     // 主方法：Java 程序入口（固定写法）
