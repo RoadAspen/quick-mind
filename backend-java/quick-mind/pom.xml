@@ -34,6 +34,8 @@
         <mybatis-plus.version>3.4.2</mybatis-plus.version>
         <!-- jwt版本 -->
         <jwt.version>0.11.5</jwt.version>
+        <!-- springfox swagger2 版本 -->
+        <springfox.version>2.9.2</springfox.version>
     </properties>
 
     <!-- 核心依赖 -->
@@ -49,6 +51,26 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+        <!-- JWT 生成 Token 核心API（包含 security 包）, 权限核心 -->
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt-api</artifactId>
+            <version>${jwt.version}</version> <!-- 最新稳定版 -->
+        </dependency>
+        <!-- 实现类（运行时必须） -->
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt-impl</artifactId>
+            <version>${jwt.version}</version>
+            <scope>runtime</scope>
+        </dependency>
+        <!-- JSON序列化（解析JWT的Claims需要） -->
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt-jackson</artifactId>
+            <version>${jwt.version}</version>
+            <scope>runtime</scope>
         </dependency>
 
         <!-- MyBatis-Plus 简化数据库操作 -->
@@ -75,31 +97,31 @@
             <optional>true</optional>
         </dependency>
 
-        <!-- JWT 生成 Token 核心API（包含 security 包）, 权限核心 -->
-        <dependency>
-            <groupId>io.jsonwebtoken</groupId>
-            <artifactId>jjwt-api</artifactId>
-            <version>${jwt.version}</version> <!-- 最新稳定版 -->
-        </dependency>
-        <!-- 实现类（运行时必须） -->
-        <dependency>
-            <groupId>io.jsonwebtoken</groupId>
-            <artifactId>jjwt-impl</artifactId>
-            <version>${jwt.version}</version>
-            <scope>runtime</scope>
-        </dependency>
-        <!-- JSON序列化（解析JWT的Claims需要） -->
-        <dependency>
-            <groupId>io.jsonwebtoken</groupId>
-            <artifactId>jjwt-jackson</artifactId>
-            <version>${jwt.version}</version>
-            <scope>runtime</scope>
-        </dependency>
         <!-- Apache Commons Lang 工具类库（简化代码编写） -->
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
             <version>3.14.0</version> <!-- 可选最新版本 -->
+        </dependency>
+        springfox swagger 依赖配置：用于接口文档生成和测试
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger2</artifactId>
+            <version>${springfox.version}</version>
+        </dependency>
+        提供 Swagger UI 页面
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger-ui</artifactId>
+            <version>${springfox.version}</version>
+        </dependency>
+
+        <!-- Spring Boot 开发工具：热部署，开发阶段使用（生产环境不要加） -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-devtools</artifactId>
+            <scope>runtime</scope>
+            <optional>true</optional>
         </dependency>
 
         <!-- Spring Boot 测试依赖：后续写单元测试用（暂时不用管，先加上） -->

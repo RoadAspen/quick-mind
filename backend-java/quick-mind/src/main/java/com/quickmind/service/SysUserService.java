@@ -22,24 +22,14 @@ public interface SysUserService extends IService<SysUser> {
      */
     SysUser selectByUserName(String userName);
 
-    /**
-     * 用户登录校验
-     * 业务逻辑: 用户名存在 + 密码正确 + 状态正常
-     *
-     * @param userName 用户名
-     * @param password 密码（前端传明文，此处需加密比对）
-     * @return 登录成功的用户
-     * @throws RuntimeException 登录失败时抛出异常（含错误信息）
-     */
-    SysUser login(String userName, String password);
 
     /**
-     * 用户注册
+     * 校验用户名密码是否正确
      *
-     * @param sysUser 用户信息
-     * @return 是否注册成功
-     * @throws RuntimeException 注册失败时抛出异常（含错误信息）
+     * @param username
+     * @param rawPassword
+     * @return
      */
-    boolean register(SysUser sysUser);
+    SysUser checkLogin(String username, String rawPassword);
 
 }

@@ -48,7 +48,7 @@ create table sys_user (
   nick_name         varchar(30)     not null                   comment '用户昵称',
   user_type         varchar(2)      default '00'               comment '用户类型（00系统用户）',
   email             varchar(50)     default ''                 comment '用户邮箱',
-  phonenumber       varchar(11)     default ''                 comment '手机号码',
+  phone             varchar(11)     default ''                 comment '手机号码',
   sex               char(1)         default '0'                comment '用户性别（0男 1女 2未知）',
   avatar            varchar(100)    default ''                 comment '头像地址',
   password          varchar(100)    default ''                 comment '密码',
@@ -68,8 +68,9 @@ create table sys_user (
 -- ----------------------------
 -- 初始化-用户信息表数据
 -- ----------------------------
-insert into sys_user values(1,  103, 'admin', '牛油果', '00', 'niuyouguo@163.com', '15888888888', '1', '', '$2a$10$7JB720yubVSZvUI0rEqK/.VqGOZTH.ulu33dHOiBE8ByOhJIrdAu2', '0', '0', '127.0.0.1', sysdate(), sysdate(), 'admin', sysdate(), '', null, '管理员');
-insert into sys_user values(2,  105, 'ry',    '牛油果', '00', 'niuyouguo@qq.com',  '15666666666', '1', '', '$2a$10$7JB720yubVSZvUI0rEqK/.VqGOZTH.ulu33dHOiBE8ByOhJIrdAu2', '0', '0', '127.0.0.1', sysdate(), sysdate(), 'admin', sysdate(), '', null, '测试员');
+insert into sys_user values
+(1,  103, 'admin', '牛油果', '00', 'niuyouguo@163.com', '15888888888', '1', '', '$2a$10$7JB720yubVSZvUI0rEqK/.VqGOZTH.ulu33dHOiBE8ByOhJIrdAu2', '0', '0', '127.0.0.1', sysdate(), sysdate(), 'admin', sysdate(), '', null, '管理员'),
+(2,  105, 'niuyouguo','牛油果', '00', 'niuyouguo@qq.com',  '15666666666', '1', '', '$2a$10$7JB720yubVSZvUI0rEqK/.VqGOZTH.ulu33dHOiBE8ByOhJIrdAu2', '0', '0', '127.0.0.1', sysdate(), sysdate(), 'admin', sysdate(), '', null, '测试员');
 
 
 -- ----------------------------
@@ -95,10 +96,10 @@ create table sys_post
 -- 初始化-岗位信息表数据
 -- ----------------------------
 insert into sys_post values
-(1, 'ceo',  '董事长',    1, '0', 'admin', sysdate(), '', null, ''),
-(2, 'se',   '项目经理',  2, '0', 'admin', sysdate(), '', null, ''),
-(3, 'hr',   '人力资源',  3, '0', 'admin', sysdate(), '', null, ''),
-(4, 'user', '普通员工',  4, '0', 'admin', sysdate(), '', null, '');
+(1, 'CEO',  '董事长',    1, '0', 'admin', sysdate(), '', null, ''),
+(2, 'SE',   '项目经理',  2, '0', 'admin', sysdate(), '', null, ''),
+(3, 'HR',   '人力资源',  3, '0', 'admin', sysdate(), '', null, ''),
+(4, 'USER', '普通员工',  4, '0', 'admin', sysdate(), '', null, '');
 
 
 -- ----------------------------
