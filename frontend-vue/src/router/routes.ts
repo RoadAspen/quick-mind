@@ -7,11 +7,6 @@ export const whiteRoutes: RouteRecordRaw[] = [
     path: '/login',
     name: 'Login',
     component: () => import('@/views/login/index')
-  },
-  {
-    path: '/registry',
-    name: 'Registry',
-    component: () => import('@/views/login/Registry')
   }
 ];
 /** 白名单 */

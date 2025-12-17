@@ -11,7 +11,8 @@ NProgress.configure({ showSpinner: false });
 function setupPageGuard(router: Router) {
   router.beforeEach(async (to, from) => {
     NProgress.start();
-    if (to.path === from.path) return; // 避免 return 重复导航
+    // 避免 return 重复导航
+    if (to.path === from.path) return;
     const token = getToken();
     // 已登录
     if (token) {
@@ -20,16 +21,14 @@ function setupPageGuard(router: Router) {
         return '/home';
       }
     } else {
-      // 如果未登录,且访问得是白名单,跳转到登录页面
+      // 如果未登录,且访问的 不是白名单,跳转到登录页面
       if (!whiteList.includes(to.path)) {
         return `/login?redirect=${to.path}`;
       }
     }
     return true;
   });
-  router.afterEach((to, from, failure) => {
-    console.log(failure);
-
+  router.afterEach(() => {
     NProgress.done();
   });
 }

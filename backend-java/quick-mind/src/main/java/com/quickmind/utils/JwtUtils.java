@@ -2,6 +2,7 @@ package com.quickmind.utils;
 
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import javax.crypto.SecretKey;
@@ -16,17 +17,20 @@ import java.util.Date;
 @Component
 public class JwtUtils {
 
+    @Value("${jwt.secret}")
+    private String secretKey;
+
+    @Value("${jwt.expiration}")
+    private long expiration;
+
     // 1. 用于生成和解析JWT的密钥（实际项目中应从配置文件读取）
     private SecretKey getSecretKey() {
         //  加密密钥（要保密！）
-        final String secretKey = "quickmind-secret-key-32bytes-long-123456";
         return Keys.hmacShaKeyFor(secretKey.getBytes(StandardCharsets.UTF_8));
     }
 
     // 2. 生成令牌（登录成功后调用）
     public String generateToken(String username) {
-        // 令牌有效期：1天
-        final long expiration = 24 * 60 * 60 * 1000;
         // 生成token，包含：用户名、签发时间、过期时间，最后用密钥签名
         return Jwts.builder()
                 // 载荷：存用户名（核心身份信息）

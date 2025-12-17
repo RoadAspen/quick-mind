@@ -1,8 +1,6 @@
 package com.quickmind.entity;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.*;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -11,9 +9,8 @@ import java.time.LocalDateTime;
  * 系统用户表  实体类（对应数据库表 sys_user）
  * Lombok 注解,自动生成 getter/setter/toString 等方法
  *
- * @author roadaspe
- * @apiNote 系统用户实体类，用于映射数据库表 sys_user
- * 包含用户的基本信息和状态管理字段
+ * @author roadaspen
+ * @apiNote 系统用户实体类，用于映射数据库表 sys_user 包含用户的基本信息和状态管理字段
  * @since 2025/12/10 16:30
  */
 @Data
@@ -24,6 +21,7 @@ public class SysUser {
      */
     @TableId(value = "user_id", type = IdType.AUTO)
     private Long userId;
+
     /**
      * 部门ID
      */
@@ -94,26 +92,29 @@ public class SysUser {
      */
     private LocalDateTime pwdUpdateDate;
 
+    /**
+     * 创建人
+     */
+    @TableField(fill = FieldFill.INSERT)
+    private String createBy;
 
     /**
      * 创建时间
      */
+    @TableField(fill = FieldFill.INSERT)
     private LocalDateTime createTime;
-
-    /**
-     * 创建人
-     */
-    private Long createBy;
-
-    /**
-     * 更新时间
-     */
-    private LocalDateTime updateTime;
 
     /**
      * 更新人
      */
-    private Long updateBy;
+    @TableField(fill = FieldFill.INSERT_UPDATE)
+    private String updateBy;
+
+    /**
+     * 更新时间
+     */
+    @TableField(fill = FieldFill.INSERT_UPDATE)
+    private LocalDateTime updateTime;
 
     /**
      * 备注

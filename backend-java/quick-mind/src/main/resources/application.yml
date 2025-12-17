@@ -3,6 +3,9 @@ server:
   port: 8080
 # spring 数据库配置
 spring:
+  jackson:
+    # 强制序列化null字段（默认false）
+    default-property-inclusion: ALWAYS
   # 服务模块
   devtools:
     restart:
@@ -11,9 +14,9 @@ spring:
   # 连接本地mysql
   datasource:
     # 数据库 URL：quickmind_db 是你之前创建的数据库名（必须一致）
-    url: jdbc:mysql://localhost:3306/quickmind_db?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=Asia/Shanghai
+    url: jdbc:mysql://localhost:3306/quickmind_db?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
     username: root # 你的 MySQL 用户名（默认 root）
-    password: 12345 # 你的 MySQL 密码（安装时设置的，必须填对）
+    password: admin # 你的 MySQL 密码（安装时设置的，必须填对）
     driver-class-name: com.mysql.cj.jdbc.Driver # MySQL 8.0 驱动（固定写法）
 
 # MyBatis-Plus 配置

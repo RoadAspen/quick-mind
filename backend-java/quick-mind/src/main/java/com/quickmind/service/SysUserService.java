@@ -22,14 +22,4 @@ public interface SysUserService extends IService<SysUser> {
      */
     SysUser selectByUserName(String userName);
 
-
-    /**
-     * 校验用户名密码是否正确
-     *
-     * @param username
-     * @param rawPassword
-     * @return
-     */
-    SysUser checkLogin(String username, String rawPassword);
-
 }

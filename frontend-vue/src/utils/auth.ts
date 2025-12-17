@@ -1,4 +1,4 @@
-import { USER_TOKEN } from '@/contants';
+import { USER_TOKEN } from '@/globalContants';
 
 /** 获取token */
 export const getToken = () => {
@@ -11,5 +11,18 @@ export const setToken = (token: string) => {
 };
 /** 删除token */
 export const removeToken = () => {
-  return localStorage.removeItem(USER_TOKEN);
+  localStorage.removeItem(USER_TOKEN);
+  console.log('删除了token');
+};
+
+/** 判断是否登录 */
+export const isLogin = () => {
+  return !!getToken();
+};
+
+export default {
+  getToken,
+  setToken,
+  removeToken,
+  isLogin
 };

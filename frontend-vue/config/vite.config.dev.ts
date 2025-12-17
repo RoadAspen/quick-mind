@@ -18,10 +18,10 @@ export default mergeConfig(
         strict: true
       },
       proxy: {
-        '/icoder-gateway': {
-          target: 'http://10.195.157.55:5006', // 替换为你的后端地址
+        '/api': {
+          target: 'http://localhost:8080', // 替换为你的后端地址
           changeOrigin: true,
-          rewrite: (path) => path.replace(/^\/icoder-gateway/, '')
+          rewrite: (path: string) => path.replace('/api/', '/')
         }
       }
     },

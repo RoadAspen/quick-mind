@@ -5,6 +5,7 @@ import com.quickmind.entity.dto.LoginRequestDTO;
 import com.quickmind.entity.vo.LoginResponseVO;
 import com.quickmind.mapper.SysUserMapper;
 import com.quickmind.utils.JwtUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -30,11 +31,18 @@ public class AuthService {
     @Resource
     private SysUserMapper sysUserMapper;
 
-    @Resource
+    @Autowired
     private JwtUtils jwtUtils;
 
-    @Resource
+    @Autowired
     private PasswordEncoder passwordEncoder;
+
+    /**
+     * 生成密码加密方法
+     */
+    public String generatePassword(String rawPassword) {
+        return passwordEncoder.encode(rawPassword);
+    }
 
     /**
      * 登录逻辑校验
@@ -50,17 +58,17 @@ public class AuthService {
         if ("1".equals(sysUser.getStatus())) {
             throw new RuntimeException("账号已禁用,请联系管理员");
         }
+        System.out.println("登录密码: " + loginRequest.getPassword());
+        System.out.println("用户密码: " + sysUser.getPassword());
 
         // 3. 校验密码
         if (!passwordEncoder.matches(loginRequest.getPassword(), sysUser.getPassword())) {
             throw new RuntimeException("密码错误");
         }
-
+        System.out.println("校验成功");
         // 4. 登录成功,返回用户
         LoginResponseVO responseVO = new LoginResponseVO();
-        responseVO.setUsername(sysUser.getUserName());
-        responseVO.setToken("Bearer " + jwtUtils.generateToken(sysUser.getUserName()));
-        responseVO.setExpiration(86400000L);
+        responseVO.setToken(jwtUtils.generateToken(sysUser.getUserName()));
 
         return responseVO;
     }

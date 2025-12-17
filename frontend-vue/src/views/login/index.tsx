@@ -1,8 +1,10 @@
+import { loginRequest } from '@/api/login';
 import loginBg from '@/assets/login/login-bg.jpg';
 import PasswordIcon from '@/assets/login/password.svg';
 import UserIcon from '@/assets/login/user.svg';
 import YanZhengIcon from '@/assets/login/yanzheng.svg';
 import { setToken } from '@/utils/auth';
+import { useAsyncState } from '@vueuse/core';
 import { Button, Checkbox, Form, Input, InputPassword } from 'ant-design-vue';
 import { defineComponent, reactive } from 'vue';
 import { useRouter } from 'vue-router';
@@ -15,21 +17,26 @@ interface FormState {
 const Login = defineComponent({
   name: 'Login',
   setup() {
+    /** 登录 */
+    const { isLoading, execute: runLogin } = useAsyncState(loginRequest, null, {
+      immediate: false,
+      onError: (e) => console.error('请求出错：', e), // 错误回调
+      onSuccess: (res) => {
+        if (res) {
+          setToken(res.token);
+          router.push('/home');
+        }
+      }
+    });
     const formState = reactive<FormState>({
       username: 'admin',
-      password: 'admin',
+      password: 'admin123',
       code: '2',
       remember: false
     });
     const router = useRouter();
     const onFinish = (values: any) => {
-      console.log(values);
-      setToken('admin');
-      router.push('/home');
-    };
-
-    const onFinishFailed = (errorInfo: any) => {
-      console.log('Failed:', errorInfo);
+      runLogin(0, values);
     };
     return () => (
       <div
@@ -42,7 +49,6 @@ const Login = defineComponent({
           name="basic"
           wrapper-col={{ span: 24 }}
           onFinish={onFinish}
-          onFinishFailed={onFinishFailed}
         >
           <h3 class="w-full text-[22px]/[30px] text-center text-[#707070] mb-[30px]">
             捷智管理系统
@@ -97,7 +103,12 @@ const Login = defineComponent({
           </Form.Item>
 
           <Form.Item wrapper-col={{ offset: 0, span: 24 }}>
-            <Button class="w-full" type="primary" html-type="submit">
+            <Button
+              class="w-full"
+              type="primary"
+              html-type="submit"
+              loading={isLoading.value}
+            >
               登录
             </Button>
           </Form.Item>

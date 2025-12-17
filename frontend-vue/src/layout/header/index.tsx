@@ -1,9 +1,12 @@
+import { logoutRequest } from '@/api/login';
 import AvatorImg from '@/assets/avator.png';
 import IconExpand from '@/assets/header/icon-expand.svg';
 import Screenfull from '@/components/Screenfull';
 import { useThemeStore } from '@/store/theme';
+import { removeToken } from '@/utils/auth';
 import { LogoutOutlined } from '@ant-design/icons-vue';
-import { Avatar, Dropdown, Menu } from 'ant-design-vue';
+import { useAsyncState } from '@vueuse/core';
+import { Avatar, Dropdown, Menu, message } from 'ant-design-vue';
 import classNames from 'classnames';
 import { defineComponent } from 'vue';
 import BreadCrumb from './BreadCrumb';
@@ -11,16 +14,22 @@ export default defineComponent({
   name: 'Header',
   setup() {
     const themeStore = useThemeStore();
-    const handleLogout = () => {
-      console.log('退出登录');
-      // 这里可以添加退出登录逻辑，如清除 token，跳转到登录页
-    };
+    /** 登出 */
+    const { execute: runLogout } = useAsyncState(logoutRequest, null, {
+      immediate: false,
+      onError: (e) => console.error('请求出错：', e),
+      onSuccess: () => {
+        removeToken();
+        message.success('登出成功');
+        window.location.href = '/login';
+      }
+    });
     const userMenu = (
       <Menu>
         <Menu.Item key="profile">
           <a href="/profile">个人中心</a>
         </Menu.Item>
-        <Menu.Item key="logout" onClick={handleLogout}>
+        <Menu.Item key="logout" onClick={() => runLogout()}>
           <LogoutOutlined class="mr-2" />
           退出登录
         </Menu.Item>
@@ -30,9 +39,6 @@ export default defineComponent({
       <Menu>
         <Menu.Item key="profile">
           <a href="/profile">个人中心</a>
-        </Menu.Item>
-        <Menu.Item key="logout" onClick={handleLogout}>
-          <a href="/profile">退出登录</a>
         </Menu.Item>
       </Menu>
     );

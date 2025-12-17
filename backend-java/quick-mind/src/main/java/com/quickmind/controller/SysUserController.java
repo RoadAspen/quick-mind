@@ -2,7 +2,6 @@ package com.quickmind.controller;
 
 import com.quickmind.entity.SysUser;
 import com.quickmind.service.SysUserService;
-import com.quickmind.utils.JwtUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,10 +23,6 @@ public class SysUserController {
 
     @Resource
     private SysUserService sysUserService;
-
-    // 注入 JWT 工具类，用于生成 token
-    @Resource
-    private JwtUtils jwtUtils;
 
     /**
      * 登录接口: POST请求,接受 JSON数据
