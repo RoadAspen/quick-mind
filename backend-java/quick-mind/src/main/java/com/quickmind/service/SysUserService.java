@@ -3,6 +3,8 @@ package com.quickmind.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.quickmind.entity.SysUser;
 
+import java.util.List;
+
 
 /**
  * 用户的Service接口(封装用户相关业务逻辑)
@@ -17,9 +19,16 @@ public interface SysUserService extends IService<SysUser> {
     /**
      * 根据用户名查询用户信息
      *
-     * @param userName 用户名
+     * @param username 用户名
      * @return 系统用户
      */
-    SysUser selectByUserName(String userName);
+    SysUser selectByUserName(String username);
 
+    /**
+     * 根据条件分页查询用户列表
+     *
+     * @param query 用户信息对象
+     * @return 用户列表数据集合
+     */
+    List<SysUser> selectUserList(int page, int pageSize, SysUser query);
 }

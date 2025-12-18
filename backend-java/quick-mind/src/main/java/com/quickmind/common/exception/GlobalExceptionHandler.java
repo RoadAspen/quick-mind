@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 /**
  * 全局异常守卫
  * 全局异常处理类，用于统一处理系统中的异常情况。
- * RestControllerAdvice 注解让这个类对所有 Controller 生效,并且所有返回值都直接变成 JSON
+ * RestControllerAdvice 注解让这个类对所有 Controller 生效,并且把所有返回值都转变为 JSON
  *
  * @author roadaspen
  * @since 2025-12-17

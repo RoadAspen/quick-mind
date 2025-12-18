@@ -17,10 +17,9 @@ export default defineComponent({
     /** 登出 */
     const { execute: runLogout } = useAsyncState(logoutRequest, null, {
       immediate: false,
-      onError: (e) => console.error('请求出错：', e),
+      onError: () => message.error('登出失败'),
       onSuccess: () => {
         removeToken();
-        message.success('登出成功');
         window.location.href = '/login';
       }
     });

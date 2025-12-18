@@ -3,6 +3,9 @@ package com.quickmind.mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.quickmind.entity.SysUser;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 /**
  * 系统用户 Mapper 接口
@@ -19,9 +22,13 @@ public interface SysUserMapper extends BaseMapper<SysUser> {
     // 4. deleteById(Long id)：根据 ID 删除
     // 5. selectList(QueryWrapper<SysUser> queryWrapper)：条件查询列表
 
-    // 手动添加一个自定义方法 ,比如 根据用户名查询用户信息,当登录的时候需要用到
-    // 注意: 如果是自定义方法,需要在对应的 XML 文件中编写 SQL 语句
-    // 例如: selectByUsername.xml 中编写 SQL: select * from sys_user where username = #{username}
+    /**
+     * 根据用户名称查询
+     */
     SysUser selectByUserName(String userName);
 
+    /**
+     * 根据条件, 分页查询
+     */
+    List<SysUser> selectUserList(@Param("offset") int offset, @Param("pageSize") int pageSize, SysUser user); // 自定义方法示例
 }

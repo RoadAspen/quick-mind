@@ -4,9 +4,10 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.quickmind.entity.SysUser;
 import com.quickmind.mapper.SysUserMapper;
 import com.quickmind.service.SysUserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
+import java.util.List;
 
 
 /**
@@ -21,7 +22,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     /**
      * 注入Mapper （MyBatis-Plus的ServiceImpl已封装基础CRUD，复杂查询需用Mapper）
      */
-    @Resource
+    @Autowired
     private SysUserMapper sysUserMapper;
 
     /**
@@ -30,6 +31,17 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     @Override
     public SysUser selectByUserName(String username) {
         return sysUserMapper.selectByUserName(username);
+    }
+
+    /**
+     * 页面查询接口（分页）：根据条件查询用户列表（不包含密码字段）
+     *
+     * @param query 用户信息对象
+     */
+    @Override
+    public List<SysUser> selectUserList(int page, int pageSize, SysUser query) {
+        int offset = (page - 1) * pageSize;
+        return sysUserMapper.selectUserList(offset, pageSize, query);
     }
 
 

@@ -7,4 +7,20 @@
         <!-- SQL语句：根据用户名查询用户信息, #{userName} 是参数占位符,表示传入的用户名,和mapper中的方法参数对应  -->
         SELECT * FROM sys_user WHERE user_name = #{userName} LIMIT 1;
     </select>
+
+    <!--    自动以SQL查询: 根据分页信息查询用户列表-->
+    <select id="selectUserList" resultType="com.quickmind.entity.SysUser">
+        SQL语句: 根据分页信息查询用户列表
+        SELECT * FROM sys_user
+        <where>
+            <if test="user.userName != null and user.userName != ''">
+                AND user_name LIKE CONCAT('%', #{user.userName}, '%')
+            </if>
+            <if test="user.status != null and user.status != ''">
+                AND status = #{user.status}
+            </if>
+        </where>
+        ORDER BY create_time DESC
+        LIMIT #{offset}, #{pageSize}
+    </select>
 </mapper>

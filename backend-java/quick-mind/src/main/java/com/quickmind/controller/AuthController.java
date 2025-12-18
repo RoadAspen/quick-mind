@@ -29,12 +29,23 @@ public class AuthController {
     @Autowired
     private JwtUtils jwtUtils;
 
+    /**
+     * 用户登录
+     *
+     * @param loginRequest 登录请求参数
+     * @return 登录响应结果
+     */
     @PostMapping("/login")
     public AjaxResult<LoginResponseVO> login(@RequestBody LoginRequestDTO loginRequest) {
         System.out.println("接收到登录请求：" + loginRequest);
         return AjaxResult.success(authService.login(loginRequest), "登陆成功");
     }
 
+    /**
+     * 用户登出
+     *
+     * @return 登出响应结果
+     */
     @PostMapping("/logout")
     public AjaxResult<Void> logout() {
         System.out.println("接收到登出请求");
