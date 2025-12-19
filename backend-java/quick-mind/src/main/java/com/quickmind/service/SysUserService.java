@@ -1,9 +1,8 @@
 package com.quickmind.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.quickmind.common.result.PageResult;
 import com.quickmind.entity.SysUser;
-
-import java.util.List;
 
 
 /**
@@ -30,5 +29,5 @@ public interface SysUserService extends IService<SysUser> {
      * @param query 用户信息对象
      * @return 用户列表数据集合
      */
-    List<SysUser> selectUserList(int page, int pageSize, SysUser query);
+    PageResult<SysUser> selectUserList(int page, int pageSize, SysUser query);
 }

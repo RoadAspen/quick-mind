@@ -10,7 +10,7 @@ const PageLayout = defineComponent({
     return () => (
       <section class="flex h-screen w-full overflow-hidden">
         <Aside routes={adminRoutes} />
-        <section class="flex-1">
+        <section class="flex-1 overflow-hidden">
           <Header />
           <section
             class="overflow-hidden"

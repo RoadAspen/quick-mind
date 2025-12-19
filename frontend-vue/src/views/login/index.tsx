@@ -24,7 +24,7 @@ const Login = defineComponent({
       onSuccess: (res) => {
         if (res) {
           setToken(res.token);
-          router.push('/home');
+          router.push('/system/user');
         }
       }
     });

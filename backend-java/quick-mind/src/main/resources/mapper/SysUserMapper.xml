@@ -10,7 +10,6 @@
 
     <!--    自动以SQL查询: 根据分页信息查询用户列表-->
     <select id="selectUserList" resultType="com.quickmind.entity.SysUser">
-        SQL语句: 根据分页信息查询用户列表
         SELECT * FROM sys_user
         <where>
             <if test="user.userName != null and user.userName != ''">
@@ -21,6 +20,22 @@
             </if>
         </where>
         ORDER BY create_time DESC
-        LIMIT #{offset}, #{pageSize}
+        LIMIT
+        <if test="offset != null and offset &gt;= 0">#{offset}</if>
+        <if test="offset == null or offset &lt;0">0</if>,
+        <if test="pageSize != null and pageSize &gt; 0 and pageSize &lt;= 100">#{pageSize}</if>
+        <if test="pageSize == null or pageSize &lt;= 0 or pageSize &gt; 100">10</if>
+    </select>
+    <!--    查询总记录数-->
+    <select id="selectUserCount" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM sys_user
+        <where>
+            <if test="user.userName != null and user.userName != ''">
+                AND user_name LIKE CONCAT('%', #{user.userName}, '%')
+            </if>
+            <if test="user.status != null and user.status != ''">
+                AND status = #{user.status}
+            </if>
+        </where>
     </select>
 </mapper>

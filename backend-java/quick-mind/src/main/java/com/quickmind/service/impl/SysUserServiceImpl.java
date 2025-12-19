@@ -1,6 +1,7 @@
 package com.quickmind.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.quickmind.common.result.PageResult;
 import com.quickmind.entity.SysUser;
 import com.quickmind.mapper.SysUserMapper;
 import com.quickmind.service.SysUserService;
@@ -39,9 +40,18 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
      * @param query 用户信息对象
      */
     @Override
-    public List<SysUser> selectUserList(int page, int pageSize, SysUser query) {
+    public PageResult<SysUser> selectUserList(int page, int pageSize, SysUser query) {
         int offset = (page - 1) * pageSize;
-        return sysUserMapper.selectUserList(offset, pageSize, query);
+        List<SysUser> list = sysUserMapper.selectUserList(offset, pageSize, query);
+        int total = sysUserMapper.selectUserCount(query);
+        // 封装分页结果
+        PageResult<SysUser> result = new PageResult<>();
+        result.setList(list);
+        result.setPage(page);
+        result.setPageSize(pageSize);
+        result.setTotal(total);
+
+        return result;
     }
 
 

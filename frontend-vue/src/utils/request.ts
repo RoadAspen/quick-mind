@@ -72,9 +72,9 @@ request.interceptors.response.use(
   }
 );
 /** 拼接url */
-export const getUrlByParams = (
+export const getUrlByParams = <T extends Record<string, any>>(
   url: string,
-  params: { [key: string]: string | number | boolean }
+  params: T
 ) => {
   const keys = Object.keys(params);
   if (!keys.length) return url;

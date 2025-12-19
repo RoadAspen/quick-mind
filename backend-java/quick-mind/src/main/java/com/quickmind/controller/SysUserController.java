@@ -1,6 +1,7 @@
 package com.quickmind.controller;
 
 import com.quickmind.common.result.AjaxResult;
+import com.quickmind.common.result.PageResult;
 import com.quickmind.entity.SysUser;
 import com.quickmind.service.SysUserService;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -9,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
-import java.util.List;
 
 /**
  * 用户管理接口控制器类
@@ -28,13 +28,15 @@ public class SysUserController {
      * 用户列表查询接口
      */
     @GetMapping("/list")
-    public AjaxResult<List<SysUser>> list(
+    public AjaxResult<PageResult<SysUser>> list(
             @RequestParam(defaultValue = "1") int page,
             @RequestParam(defaultValue = "10") int pageSize,
             SysUser query
     ) {
         // 调用Service层
-        List<SysUser> userList = sysUserService.selectUserList(page, pageSize, query);
+
+        PageResult<SysUser> userList = sysUserService.selectUserList(page, pageSize, query);
+        // 返回分页结果
         return AjaxResult.success(userList);
     }
 }

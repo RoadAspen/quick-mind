@@ -30,5 +30,10 @@ public interface SysUserMapper extends BaseMapper<SysUser> {
     /**
      * 根据条件, 分页查询
      */
-    List<SysUser> selectUserList(@Param("offset") int offset, @Param("pageSize") int pageSize, SysUser user); // 自定义方法示例
+    List<SysUser> selectUserList(@Param("offset") int offset, @Param("pageSize") int pageSize, SysUser user);
+
+    /**
+     * 根据条件查询用户数量
+     */
+    int selectUserCount(@Param("user") SysUser user);
 }
