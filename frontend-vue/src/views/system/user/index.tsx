@@ -1,6 +1,11 @@
-import { getSysUserListRequest } from '@/api/user';
 import PageContainer from '@/components/PageContainer';
-import { TableData } from '@/types/common';
+import {
+  DelFlagMap,
+  UserSexMap,
+  UserStatusMap,
+  UserTypeMap,
+  useSysUserStore
+} from '@/store/system/user';
 import {
   DelFlagEnum,
   SysUserInfo,
@@ -13,12 +18,19 @@ import {
   EditOutlined,
   EyeOutlined
 } from '@ant-design/icons-vue';
-import { useAsyncState } from '@vueuse/core';
-import { Button, Space, Table, TableColumnProps, Tag } from 'ant-design-vue';
+import {
+  Button,
+  Space,
+  Switch,
+  Table,
+  TableColumnProps,
+  Tag
+} from 'ant-design-vue';
 import { defineComponent, onMounted, reactive } from 'vue';
 
 export default defineComponent({
   setup() {
+    const userStore = useSysUserStore();
     function handleView(record: SysUserInfo): void {
       throw new Error('Function not implemented.');
     }
@@ -30,26 +42,6 @@ export default defineComponent({
     function handleDelete(userId: number): void {
       throw new Error('Function not implemented.');
     }
-    // 枚举文本映射（用于表格渲染）
-    const UserTypeMap = {
-      [UserTypeEnum.ORDINARY]: '普通用户'
-    };
-
-    const UserSexMap = {
-      [UserSexEnum.MALE]: '男',
-      [UserSexEnum.FEMALE]: '女',
-      [UserSexEnum.UNKNOWN]: '未知'
-    };
-
-    const UserStatusMap = {
-      [UserStatusEnum.NORMAL]: '正常',
-      [UserStatusEnum.DISABLED]: '禁用'
-    };
-
-    const DelFlagMap = {
-      [DelFlagEnum.UNDELETED]: '未删除',
-      [DelFlagEnum.DELETED]: '已删除'
-    };
     const columns: TableColumnProps<SysUserInfo>[] = reactive([
       {
         title: '用户ID',
@@ -59,18 +51,19 @@ export default defineComponent({
         align: 'center',
         fixed: true
       },
-      {
-        title: '部门ID',
-        dataIndex: 'deptId',
-        key: 'deptId',
-        width: 80,
-        align: 'center'
-      },
+
       {
         title: '用户名',
         dataIndex: 'userName',
         key: 'userName',
         width: 120,
+        align: 'center'
+      },
+      {
+        title: '部门名称',
+        dataIndex: 'deptName',
+        key: 'deptName',
+        width: 80,
         align: 'center'
       },
       {
@@ -86,9 +79,8 @@ export default defineComponent({
         key: 'userType',
         width: 100,
         align: 'center',
-        // 枚举值转中文
-        render: (_: string, record: SysUserInfo) =>
-          UserTypeMap[record.userType] || '未知'
+        customRender: ({ text }: { text: UserTypeEnum }) =>
+          UserTypeMap[text] || '未知'
       },
       {
         title: '邮箱',
@@ -110,8 +102,8 @@ export default defineComponent({
         key: 'sex',
         width: 80,
         align: 'center',
-        render: (_: string, record: SysUserInfo) =>
-          UserSexMap[record.sex] || '未知'
+        customRender: ({ text }: { text: UserSexEnum }) =>
+          UserSexMap[text] || '未知'
       },
       {
         title: '用户状态',
@@ -119,12 +111,28 @@ export default defineComponent({
         key: 'status',
         width: 100,
         align: 'center',
-        // AntD 风格状态标签渲染
-        render: (_: string, record: SysUserInfo) => {
-          const statusText = UserStatusMap[record.status] || '未知';
-          const statusColor =
-            record.status === UserStatusEnum.NORMAL ? 'success' : 'error';
-          return <Tag color={statusColor}>{statusText}</Tag>;
+        customRender: ({
+          text,
+          record
+        }: {
+          text: UserStatusEnum;
+          record: SysUserInfo;
+        }) => {
+          const statusText = UserStatusMap[text] || '未知';
+          return (
+            <Switch
+              size="small"
+              checked={text === UserStatusEnum.NORMAL}
+              onChange={() =>
+                userStore.handleSwitchUserStatus(
+                  text === UserStatusEnum.NORMAL
+                    ? UserStatusEnum.DISABLED
+                    : UserStatusEnum.NORMAL,
+                  record.userId
+                )
+              }
+            />
+          );
         }
       },
       {
@@ -141,8 +149,8 @@ export default defineComponent({
         width: 200,
         align: 'center',
         // 时间格式化（去掉 T 分隔符）
-        render: (_: string, record: SysUserInfo) =>
-          record.loginDate?.replace('T', ' ') || '-'
+        customRender: ({ text }: { text: string }) =>
+          text?.replace('T', ' ') || '-'
       },
       {
         title: '删除状态',
@@ -150,10 +158,10 @@ export default defineComponent({
         key: 'delFlag',
         width: 100,
         align: 'center',
-        render: (_: string, record: SysUserInfo) => {
-          const delText = DelFlagMap[record.delFlag] || '未知';
+        customRender: ({ text }: { text: DelFlagEnum }) => {
+          const delText = DelFlagMap[text] || '未知';
           const delColor =
-            record.delFlag === DelFlagEnum.UNDELETED ? 'default' : 'danger';
+            text === DelFlagEnum.UNDELETED ? 'default' : 'danger';
           return <Tag color={delColor}>{delText}</Tag>;
         }
       },
@@ -170,22 +178,15 @@ export default defineComponent({
         key: 'createTime',
         width: 200,
         align: 'center',
-        render: (_: string, record: SysUserInfo) =>
-          record.createTime?.replace('T', ' ') || '-'
+        customRender: ({ text }: { text: string }) =>
+          text?.replace('T', ' ') || '-'
       },
       {
         title: '备注',
         dataIndex: 'remark',
         key: 'remark',
         width: 150,
-        align: 'center',
-        // 备注过长省略
-        render: (_: string, record: SysUserInfo) => {
-          if (!record.remark) return '-';
-          return record.remark.length > 10
-            ? `${record.remark.slice(0, 10)}...`
-            : record.remark;
-        }
+        align: 'center'
       },
       {
         title: '操作',
@@ -193,7 +194,7 @@ export default defineComponent({
         width: 180,
         align: 'center',
         fixed: 'right',
-        render: (_: any, record: SysUserInfo) => (
+        customRender: ({ record }) => (
           <Space size="small">
             <Button
               type="primary"
@@ -224,40 +225,20 @@ export default defineComponent({
       }
     ]);
 
-    const tableData: TableData<SysUserInfo> = reactive({ list: [], total: 0 });
-
-    const { isLoading, execute: runGetUserList } = useAsyncState(
-      getSysUserListRequest,
-      null,
-      {
-        immediate: false,
-        onSuccess: (res) => {
-          if (res) {
-            tableData.total = res.total;
-            tableData.list = res.list || [];
-          }
-        }
-      }
-    );
-    const params = reactive({
-      page: 1,
-      pageSize: 10
-    });
-
     onMounted(() => {
-      runGetUserList(0, params);
+      userStore.runGetUserList(0, userStore.pagination);
     });
 
     return () => (
       <PageContainer>
         <Table
           columns={columns}
-          data-source={tableData.list}
+          data-source={userStore.tableData.list}
           pagination={false}
           scroll={{ x: 1000 }}
           size="small"
           bordered={true}
-          loading={isLoading.value}
+          loading={userStore.tableLoading}
         ></Table>
       </PageContainer>
     );

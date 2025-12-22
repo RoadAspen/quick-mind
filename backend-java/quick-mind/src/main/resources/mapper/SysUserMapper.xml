@@ -9,17 +9,37 @@
     </select>
 
     <!--    自动以SQL查询: 根据分页信息查询用户列表-->
-    <select id="selectUserList" resultType="com.quickmind.entity.SysUser">
-        SELECT * FROM sys_user
+    <select id="selectUserList" resultType="com.quickmind.entity.vo.SysUserListVO">
+        SELECT
+        u.user_id,
+        u.user_name,
+        u.nick_name,
+        u.email,
+        u.phone,
+        u.sex,
+        u.avatar,
+        d.dept_id,
+        d.dept_name,
+        u.status,
+        u.del_flag,
+        u.login_ip,
+        u.login_date,
+        u.create_by,
+        u.create_time,
+        u.update_by,
+        u.update_time,
+        u.remark
+        FROM sys_user u
+        LEFT JOIN sys_dept d ON u.dept_id = d.dept_id
         <where>
             <if test="user.userName != null and user.userName != ''">
-                AND user_name LIKE CONCAT('%', #{user.userName}, '%')
+                AND u.user_name LIKE CONCAT('%', #{user.userName}, '%')
             </if>
             <if test="user.status != null and user.status != ''">
-                AND status = #{user.status}
+                AND u.status = #{user.status}
             </if>
         </where>
-        ORDER BY create_time DESC
+        ORDER BY u.create_time DESC
         LIMIT
         <if test="offset != null and offset &gt;= 0">#{offset}</if>
         <if test="offset == null or offset &lt;0">0</if>,
