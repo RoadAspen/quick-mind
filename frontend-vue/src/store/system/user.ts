@@ -11,7 +11,7 @@ import {
 import { useAsyncState } from '@vueuse/core';
 import { Modal } from 'ant-design-vue';
 import { defineStore } from 'pinia';
-import { reactive } from 'vue';
+import { Reactive, reactive } from 'vue';
 /** 用户类型映射 */
 export const UserTypeMap = {
   [UserTypeEnum.ORDINARY]: '普通用户'
@@ -39,20 +39,32 @@ export const useSysUserStore = defineStore('user', () => {
     pageSize: 10
   });
   /** 筛选请求 */
-  const filterForm = reactive({
+  const filterForm: Reactive<{
+    username: string;
+    nickname: string;
+    status?: undefined;
+    sex?: undefined;
+  }> = reactive({
     username: '',
     nickname: '',
-    status: undefined as string | undefined,
-    sex: undefined as string | undefined
+    status: undefined,
+    sex: undefined
   });
   /** 弹窗表单  新增/编辑弹窗  */
-  const modalForm = reactive({
+  const modalForm: Reactive<{
+    username: string;
+    nickname: string;
+    email: string;
+    phone: string;
+    sex?: string;
+    status?: string;
+  }> = reactive({
     username: '',
     nickname: '',
     email: '',
     phone: '',
-    sex: undefined as string | undefined,
-    status: '0' as string
+    sex: undefined,
+    status: '0'
   });
 
   /** 表格数据 */

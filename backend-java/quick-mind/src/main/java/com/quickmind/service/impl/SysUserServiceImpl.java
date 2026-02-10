@@ -7,6 +7,7 @@ import com.quickmind.mapper.SysUserMapper;
 import com.quickmind.service.SysUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -53,6 +54,54 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 
         return result;
     }
+
+    /**
+     * 根据ID批量删除用户
+     * Transactional 注解用于开启事务，rollbackFor = Exception.class 表示发生任何异常都回滚
+     *
+     * @param ids 用户ID集合
+     */
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void deleteBatchIds(String ids, String updateBy) {
+        // 按逗号、分号、竖线拆分（正则：[,;|] 匹配任意一个分隔符）
+        String[] idArray = ids.split("[,;|]");
+        sysUserMapper.deleteBatchIds(idArray);
+    }
+
+    ;
+
+    /**
+     * 单独修改用户状态
+     */
+    @Override
+    public void updateUserStatus(Long userId, Integer status) {
+
+    }
+
+    ;
+
+    /**
+     * 编辑用户信息
+     *
+     * @param sysUser 用户信息
+     */
+    @Override
+    public void updateUser(SysUser sysUser) {
+
+    }
+
+    ;
+
+    /**
+     * 新增用户
+     */
+    @Override
+    public void insertUser(SysUser sysUser) {
+
+    }
+
+    ;
 
 
 }

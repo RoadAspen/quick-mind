@@ -57,7 +57,7 @@
       │
       ▼
 ┌───────────────────────────────┐
-│             SQL                │
+│             SQL XML               │
 │ SELECT * FROM sys_user         │
 │ WHERE ...                      │
 │ LIMIT offset, pageSize         │
@@ -88,15 +88,15 @@
 
 **职责**
 
-* 接参数
-* 调 Service
-* 返回统一结果
+- 接参数
+- 调 Service
+- 返回统一结果
 
 **绝对不做**
 
-* SQL
-* if else 业务判断
-* 计算 offset
+- SQL
+- if else 业务判断
+- 计算 offset
 
 ```java
 
@@ -118,7 +118,7 @@ public AjaxResult<List<SysUser>> list(
 
 **职责**
 
-* 描述：我能干什么
+- 描述：我能干什么
 
 ```java
 public interface UserService {
@@ -135,9 +135,9 @@ public interface UserService {
 
 **职责**
 
-* 业务逻辑
-* 参数计算
-* 事务、缓存、权限
+- 业务逻辑
+- 参数计算
+- 事务、缓存、权限
 
 ```java
 
@@ -163,8 +163,8 @@ public class UserServiceImpl implements UserService {
 
 **职责**
 
-* Java 参数 → SQL
-* SQL 结果 → Java 对象
+- Java 参数 → SQL
+- SQL 结果 → Java 对象
 
 ```java
 public interface UserMapper {
@@ -206,14 +206,13 @@ public interface UserMapper {
 这是**最正确的学习路径**：
 
 1. 先懂：
+   - offset 怎么算
+   - 参数怎么进 SQL
+   - 分层为什么存在
 
-    * offset 怎么算
-    * 参数怎么进 SQL
-    * 分层为什么存在
 2. 再用：
-
-    * MP 的 `Page<T>`
-    * PageHelper
+   - MP 的 `Page<T>`
+   - PageHelper
 
 > 否则就是“会用但不懂”
 
@@ -221,9 +220,8 @@ public interface UserMapper {
 
 ## 四、一句话总结（你可以直接记）
 
-> **Controller 接请求
+> Controller 接请求
 > Service 定能力
 > ServiceImpl 写业务
 > Mapper 写 SQL
-> AjaxResult 统一返回**
-
+> AjaxResult 统一返回
